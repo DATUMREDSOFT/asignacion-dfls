@@ -1,0 +1,117 @@
+<p-menubar [model]="items">
+    <ng-template pTemplate="start">
+        <h3>DFLS</h3>
+    </ng-template>
+    <ng-template pTemplate="end">
+        <button type="button" pButton label="Cerrar sesión" icon="pi pi-sign-out" class="p-button-danger"></button>
+    </ng-template>
+</p-menubar>
+<main class="container">
+    <div class="row">
+        <div class="col-md-12 mt-4">
+
+            <h1>Asignación</h1>
+
+        </div>
+
+    </div>
+
+    <form action="" class="row">
+        <div class="col-lg-4 form-group">
+            <label for="range">Tiempo de asignación</label>
+            <br>
+            <p-calendar [style]="{'minWidth':'100%'}" [(ngModel)]="rangeDates" name="rangeDates" selectionMode="range"
+                [readonlyInput]="true" inputId="range"></p-calendar>
+        </div>
+
+        <div class="col-lg-2">
+            <label for="range">Work day</label>
+
+
+            <br>
+            <p-inputSwitch name="checked" [(ngModel)]="jsonSend.todoDia"></p-inputSwitch>
+        </div>
+
+        <div class="col-lg-6" *ngIf="!jsonSend.todoDia">
+            <label>De {{rangeValues[0] + ':00:00 a ' + rangeValues[1]+':00:00'}}</label>
+            <br>
+            <p-slider [(ngModel)]="rangeValues" name="rangeValues" [range]="true" [min]="0" [max]="24"></p-slider>
+        </div>
+
+        <div class="col-lg-12 form-group">
+            <label for="range">Seleccione el ingeniero </label>
+
+            <br>
+            <p-dropdown [style]="{'minWidth':'100%'}" [options]="listaIngenieros" [(ngModel)]="selectedIngeniero"
+                name="selectedIngeniero" optionLabel="nombre" [filter]="true" filterBy="nombre" [showClear]="true"
+                placeholder="Selecione un ingeniero">
+                <ng-template pTemplate="selectedItem">
+                    <div class="country-item country-item-value" *ngIf="selectedIngeniero">
+                        <div>{{selectedIngeniero.nombre}}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-country pTemplate="item">
+                    <div class="country-item">
+                        <div>{{country.nombre}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+
+        </div>
+        <div class="col-lg-6 form-group">
+            <label for="range">Seleccione el cliente</label>
+            <br>
+            <p-dropdown [style]="{'min-width':'100%', 'max-width':'100%'}" [options]="listaClientes" [(ngModel)]="selectedCliente"
+                (ngModelChange)="changeCliente($event)" name="selectedCliente" optionLabel="nombre" [filter]="true"
+                filterBy="nombre" [showClear]="true" placeholder="Selecione un cliente">
+                <ng-template pTemplate="selectedItem">
+                    <div class="country-item country-item-value" *ngIf="selectedCliente">
+                        <div>{{selectedCliente.nombre}}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-country pTemplate="item">
+                    <div class="country-item">
+                        <div>{{country.nombre}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+
+        </div>
+
+        <div class="col-lg-6 form-group" *ngIf="selectedCliente">
+            <label for="range">Seleccione el contrato</label>
+            <br>
+         
+            <p-dropdown [style]="{'minWidth':'100%'}" [options]="listaContratosCLiente" [(ngModel)]="selectedContrato"
+                name="selectedContrato" optionLabel="contratoNombre" [filter]="true" filterBy="contratoNombre"
+                [showClear]="true" placeholder="Selecione un contrato">
+                <ng-template pTemplate="selectedItem">
+                    <div class="country-item country-item-value" *ngIf="selectedContrato">
+                        <div>{{selectedContrato.contratoNombre}}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-country pTemplate="item">
+                    <div class="country-item">
+                        <div>{{country.contratoNombre}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+
+        </div>
+
+        <div class="col-lg-12 form-group">
+            <label for="range">Detalle de asignación</label>
+            <br>
+            <input type="text" name="text" [(ngModel)]="jsonSend.nombre" pInputText [style]="{'minWidth':'100%'}" />
+
+        </div>
+
+        <div class="col-12">
+            <p class="text-right">
+                <button pButton type="button" label="Salir" class="p-button-danger"></button>
+                <button pButton type="button" label="Salvar cambios" class="p-button-primary" (click)="salvarCambios()"></button>
+            </p>
+           <!--  <pre>{{jsonSend|json}}</pre> -->
+        </div>
+    </form>
+</main>
