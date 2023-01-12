@@ -2,3 +2,12 @@
 .ui-dropdown {
     width: 100% !important;
 }
+
+.swal2-styled.swal2-confirm {
+    border: 0;
+    border-radius: 0.25em;
+    background: initial;
+    background-color: #717171 !important;
+    color: #fff;
+    font-size: 1em;
+}

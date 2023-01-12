@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MegaMenuItem } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-asignacion',
@@ -101,8 +102,8 @@ export class AsignacionComponent {
       this.jsonSend.horaFin = "18";
       this.jsonSend.ingenieroId = this.selectedIngeniero.id;
       this.jsonSend.contratoId = this.selectedContrato.contratoId;
-      this.jsonSend.fechaInicio = this.rangeDates[0].toISOString();
-      this.jsonSend.fechaFin = this.rangeDates[1].toISOString();
+      this.jsonSend.fechaInicio = new Date(this.rangeDates[0]).toString().replace(' (Central Standard Time)','');
+      this.jsonSend.fechaFin = new Date(this.rangeDates[1]).toString().replace(' (Central Standard Time)','');
 
 
       if (!this.jsonSend.todoDia) {
@@ -110,18 +111,28 @@ export class AsignacionComponent {
         this.jsonSend.horaFin = this.rangeValues[1].toString();
       }
 
-
-
       if (this.jsonSend.nombre != '') {
         this.api.postAsignacion(this.jsonSend).subscribe(response => {
           console.log('postAsignacion', response);
+          Swal.fire('Exito', 'Asignación registrada.', 'success');
         });
       }
       else {
         alert('Formulario no valido');
+        Swal.fire({
+          title: 'Error',
+          text: 'Favor completar el formulario',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     } catch (error) {
-      alert('Formulario no valido');
+      Swal.fire({
+        title: 'Error',
+        text: 'Favor completar formulario',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
 }

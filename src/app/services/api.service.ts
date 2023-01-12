@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  private urlServer: string = "https://dfls.datumredsoft.com/Dfls-2-Op-rest/rest/WsAssign/";
+  private urlServer: string = "https://dfls.datumredsoft.com/Dfls-2-Op-rest/rest/WsAssign";
 
   constructor(private http: HttpClient) { }
 
